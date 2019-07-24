@@ -19,8 +19,6 @@ export class UsersListComponent implements OnInit {
   paginationInfo$: Observable<PaginationInfo>;
   pagesCount: number;
 
-  pageActive = 1;
-
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router) {
   }
@@ -38,8 +36,7 @@ export class UsersListComponent implements OnInit {
   }
 
   pageChanged(event: PageEvent): void {
-    this.pageActive = event.pageIndex + 1;
-    this.router.navigate(['./'], { queryParams: { page: this.pageActive } });
+    this.router.navigate(['./'], { queryParams: { page: event.pageIndex + 1 } });
   }
 
   userSelected(user: UserInterface): void {

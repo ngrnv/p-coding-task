@@ -17,6 +17,6 @@
   </table>
   <mat-paginator [pageSize]="(paginationInfo$ | async)?.per_page"
                  [length]="(paginationInfo$ | async)?.total"
-                 [pageIndex]="pageActive"
+                 [pageIndex]="(paginationInfo$ | async)?.page - 1"
                  (page)="pageChanged($event)"></mat-paginator>
 </div>
