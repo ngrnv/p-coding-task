@@ -12,3 +12,7 @@ export interface PaginatedApiResponse<T> {
   total: number;
   page: number;
 }
+
+export interface ApiResponse<T> {
+  data: T;
+}

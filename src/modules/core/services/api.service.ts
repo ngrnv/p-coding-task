@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User, UserInterface } from '../../../interfaces';
+import { User } from '../../../interfaces';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { PaginatedApiResponse } from 'src/interfaces/pagination';
+import { ApiResponse, PaginatedApiResponse } from 'src/interfaces/pagination';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -15,8 +16,8 @@ export class ApiService {
     return this.http.get<PaginatedApiResponse<User>>(`${environment.APIS.USER}/users?page=${page}`);
   }
 
-  fetchUserById(id: number): Observable<UserInterface> {
-    return this.http.get<UserInterface>(`https://reqres.in/api/users/${id}`);
+  fetchUserById(id: number): Observable<User> {
+    return this.http.get<ApiResponse<User>>(`${environment.APIS.USER}/users/${id}`).pipe(map(res => res.data));
   }
 
 }

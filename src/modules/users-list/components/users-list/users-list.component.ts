@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { UserInterface } from '../../../../interfaces';
 import { Observable } from 'rxjs';
 import { PaginationInfo } from 'src/interfaces/pagination';
 import { pick } from 'ramda';
+import { User } from 'src/interfaces';
+import { UsersStoreService } from '../../../core/store/users-store.service';
 
 @Component({
   selector: 'app-users-list',
@@ -15,11 +16,12 @@ import { pick } from 'ramda';
 export class UsersListComponent implements OnInit {
 
   displayedColumns = ['first_name', 'last_name', 'email'];
-  usersList$: Observable<UserInterface[]>;
+  usersList$: Observable<User[]>;
   paginationInfo$: Observable<PaginationInfo>;
   pagesCount: number;
 
   constructor(private activatedRoute: ActivatedRoute,
+              private userStore: UsersStoreService,
               private router: Router) {
   }
 
@@ -39,7 +41,8 @@ export class UsersListComponent implements OnInit {
     this.router.navigate(['./'], { queryParams: { page: event.pageIndex + 1 } });
   }
 
-  userSelected(user: UserInterface): void {
+  userSelected(user: User): void {
     this.router.navigate(['./user', user.id]);
+    this.userStore.selectedUser$.next(user);
   }
 }

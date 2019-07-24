@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, Optional } from '@angular/core';
-import { UserInterface } from '../../../../interfaces';
-import { UserComponent } from '../user/user.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { User } from 'src/interfaces';
 
 @Component({
   selector: 'app-user-data',
@@ -9,13 +8,12 @@ import { UserComponent } from '../user/user.component';
 })
 export class UserDataComponent implements OnInit {
 
-  @Input() user: UserInterface;
+  @Input() user: User;
 
-  constructor(@Optional() private parent: UserComponent) { }
+  constructor() {
+  }
 
   ngOnInit() {
-    console.log(this.parent);
-    this.parent.user = { ...this.user };
   }
 
 }

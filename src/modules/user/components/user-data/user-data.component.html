@@ -1,1 +1,8 @@
-<div>{{ user | json }}</div>
+<mat-card class="custom-card mat-card mat-elevation-z8">
+  <mat-card-header class="mat-card-header">
+    <mat-card-title class="mat-card-title">{{user?.first_name}} {{user?.last_name}}</mat-card-title>
+    <mat-card-subtitle class="mat-card-subtitle">{{user.email}}</mat-card-subtitle>
+  </mat-card-header>
+  <img [alt]="'Photo of' + user?.first_name + ' ' + user?.last_name" class="mat-card-image" mat-card-image
+       [src]="user.avatar">
+</mat-card>

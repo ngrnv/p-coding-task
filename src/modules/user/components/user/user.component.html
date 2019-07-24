@@ -1,3 +1,5 @@
-<button (click)="back()">Back</button>
+<div class="m-4">
+  <button class="mat-button mat-raised-button mb-3" (click)="back()">Back</button>
 
-<app-user-data [user]="user"></app-user-data>
+  <app-user-data [user]="user$ | async"></app-user-data>
+</div>

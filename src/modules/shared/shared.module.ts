@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatPaginatorModule, MatTableModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatPaginatorModule, MatTableModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
 const MODULES = [
   CommonModule,
   HttpClientModule,
   MatPaginatorModule,
-  MatTableModule
+  MatTableModule,
+  MatCardModule,
+  MatButtonModule,
 ];
 
 @NgModule({
