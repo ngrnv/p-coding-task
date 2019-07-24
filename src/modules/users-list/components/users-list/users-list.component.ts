@@ -3,7 +3,9 @@ import { PageEvent } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { UserInterface } from '../../../../interfaces';
-import { ApiService } from '../../../core/services';
+import { Observable } from 'rxjs';
+import { PaginationInfo } from 'src/interfaces/pagination';
+import { pick } from 'ramda';
 
 @Component({
   selector: 'app-users-list',
@@ -13,7 +15,8 @@ import { ApiService } from '../../../core/services';
 export class UsersListComponent implements OnInit {
 
   displayedColumns = ['first_name', 'last_name', 'email'];
-  userList: any[] = [];
+  usersList$: Observable<UserInterface[]>;
+  paginationInfo$: Observable<PaginationInfo>;
   pagesCount: number;
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -21,23 +24,29 @@ export class UsersListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.data.pipe(
-      map(data => data.users)
-    )
-      .subscribe((users: UserInterface[]) => {
-        this.userList = users;
-      });
 
-    this.activatedRoute.data.pipe(
-      map(data => data.paginationInfo)
-    )
-      .subscribe(paginationInfo => {
-        this.pagesCount = paginationInfo.total;
-      })
+    this.usersList$ = this.activatedRoute.data.pipe(
+      map(data => data.users.data)
+    );
+
+    this.paginationInfo$ = this.activatedRoute.data.pipe(
+      map(data => pick(['total_pages', 'per_page', 'total', 'page'], data.users))
+    );
+
+    // this.userList$ = this.activatedRoute.data.pipe(
+    //   map(data => data.users)
+    // );
+
+    // this.activatedRoute.data.pipe(
+    //   map(data => data.paginationInfo)
+    // )
+    //   .subscribe(paginationInfo => {
+    //     this.pagesCount = paginationInfo.total;
+    //   });
   }
 
   pageChanged(event: PageEvent): void {
-    let page: number = event.pageIndex + 1;
+    const page: number = event.pageIndex + 1;
     this.router.navigate(['./'], { queryParams: { page } });
   }
 

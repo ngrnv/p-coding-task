@@ -1,26 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { UserInterface } from '../../../interfaces';
-import { PaginationApiService } from './pagination-api.service';
+import { User, UserInterface } from '../../../interfaces';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { PaginatedApiResponse } from 'src/interfaces/pagination';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ApiService {
 
-  constructor(private http: Http, private paginationApiService: PaginationApiService) {
+  constructor(private http: HttpClient) {
   }
 
-  fetchUsers(page): Observable<any> {
-    return this.http.get('https://reqres.in/api/users?page=' + page).pipe(map(response => response.json().data));
-  }
-
-  fetchPaginationInfo(): Observable<any> {
-    return this.paginationApiService.fetchPaginationInfo();
+  fetchUsers(page): Observable<PaginatedApiResponse<User>> {
+    return this.http.get<PaginatedApiResponse<User>>(`${environment.APIS.USER}/users?page=${page}`);
   }
 
   fetchUserById(id: number): Observable<UserInterface> {
-    return this.http.get(`https://reqres.in/api/users/${id}`).pipe(map(response => response.json()));
+    return this.http.get<UserInterface>(`https://reqres.in/api/users/${id}`);
   }
 
 }
