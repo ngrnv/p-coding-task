@@ -9,7 +9,8 @@ const routes: Routes = [
     resolve: {
       users: UsersResolver,
     },
-    component: UsersListComponent
+    component: UsersListComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   }
 ];
 

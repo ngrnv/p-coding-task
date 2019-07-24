@@ -19,6 +19,8 @@ export class UsersListComponent implements OnInit {
   paginationInfo$: Observable<PaginationInfo>;
   pagesCount: number;
 
+  pageActive = 1;
+
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router) {
   }
@@ -33,21 +35,11 @@ export class UsersListComponent implements OnInit {
       map(data => pick(['total_pages', 'per_page', 'total', 'page'], data.users))
     );
 
-    // this.userList$ = this.activatedRoute.data.pipe(
-    //   map(data => data.users)
-    // );
-
-    // this.activatedRoute.data.pipe(
-    //   map(data => data.paginationInfo)
-    // )
-    //   .subscribe(paginationInfo => {
-    //     this.pagesCount = paginationInfo.total;
-    //   });
   }
 
   pageChanged(event: PageEvent): void {
-    const page: number = event.pageIndex + 1;
-    this.router.navigate(['./'], { queryParams: { page } });
+    this.pageActive = event.pageIndex + 1;
+    this.router.navigate(['./'], { queryParams: { page: this.pageActive } });
   }
 
   userSelected(user: UserInterface): void {
