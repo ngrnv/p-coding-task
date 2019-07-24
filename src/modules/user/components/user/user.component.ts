@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/interfaces';
-import { UsersStoreService } from '../../../core/store/users-store.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -14,9 +13,9 @@ export class UserComponent implements OnInit {
 
   user$: Observable<User>;
 
-  constructor(public userStore: UsersStoreService,
-              private activatedRoute: ActivatedRoute,
-              private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute,
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.user$ = this.activatedRoute.data.pipe(map(data => data.user));
